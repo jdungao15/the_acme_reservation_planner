@@ -2,9 +2,8 @@ const pg = require("pg");
 const client =
   new pg.client(process.env.DATABASE_URL) || "localhost://restaurant_db";
 
-const init = async () => {
-  await client.connect();
-  console.log("Connected to db");
+const createTable = async () => {
+
 
   const SQL = `
         DROP TABLE IF EXISTS customers;
@@ -29,8 +28,9 @@ const init = async () => {
             customer_id UUID REFERENCES customers(id) NOT NULL
         );
     `;
-  await client.query(SQL);
+    await client.query(SQL);
   console.log("database seeded");
 };
 
-init();
+
+modules.exports = {client, createTable}
